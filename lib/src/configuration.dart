@@ -28,6 +28,9 @@ class Configuration {
   final double minCodeCoverageAllowed;
 
   ///
+  final bool enableHtmlReport;
+
+  ///
   const Configuration({
     required this.projectDirPath,
     required this.projectType,
@@ -37,6 +40,7 @@ class Configuration {
     required this.coverageOutputDirPath,
     required this.excludes,
     required this.minCodeCoverageAllowed,
+    required this.enableHtmlReport,
   });
 }
 

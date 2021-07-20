@@ -30,6 +30,8 @@ const String _coverageExclude = 'coverage-exclude';
 
 const String _minCoveragePercent = 'min-cov';
 
+const String _htmlReport = 'html-report';
+
 /// Script argument parser.
 final ArgParser argumentParser = ArgParser()
   ..addOption(
@@ -72,6 +74,11 @@ final ArgParser argumentParser = ArgParser()
         'of code coverage allowed, from 0.0 to 1.0',
     defaultsTo: '0.0',
   )
+  ..addFlag(
+    _htmlReport,
+    help: 'Generate html report.',
+    defaultsTo: true,
+  )
   ..addFlag(helpArgument, help: 'Print help message');
 
 /// Print help message to the console.
@@ -103,6 +110,7 @@ extension ArgResultsExtension on ArgResults {
       coverageOutputDirPath: _parseStringArg(_coverageOutputDirPathArgument),
       excludes: _parseExcludes(),
       minCodeCoverageAllowed: _parseMinCodeCoverage(),
+      enableHtmlReport: _parseHtmlReport(),
     );
   }
 
@@ -156,6 +164,16 @@ extension ArgResultsExtension on ArgResults {
     }
 
     throw ArgumentError('$_minCoveragePercent parameter is required');
+  }
+
+  bool _parseHtmlReport() {
+    final Object? enableHtmlReport = this[_htmlReport];
+
+    if (enableHtmlReport is bool) {
+      return enableHtmlReport;
+    }
+
+    throw ArgumentError('$_htmlReport parameter is required');
   }
 
   String _parseStringArg(String argumentName) {

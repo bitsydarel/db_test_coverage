@@ -88,7 +88,7 @@ class LcovScriptCoverageReporter extends CoverageReporter {
       <String>[
         '--remove',
         coverageFilePath,
-        ...excludes.map((String exclude) => "'$exclude'"),
+        ...excludes,
         '-o',
         coverageFilePath,
       ],

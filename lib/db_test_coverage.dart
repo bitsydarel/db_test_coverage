@@ -7,3 +7,4 @@ export 'package:db_test_coverage/src/exceptions.dart';
 export 'package:db_test_coverage/src/coverage_reporters/lcov_script_coverage_reporter.dart';
 export 'package:db_test_coverage/src/coverage_reporter.dart';
 export 'package:db_test_coverage/src/script_utils.dart';
+export 'package:db_test_coverage/src/coverage_patcher.dart';

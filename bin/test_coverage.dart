@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:args/args.dart';
 import 'package:db_test_coverage/db_test_coverage.dart';
-import 'package:db_test_coverage/src/coverage_patcher.dart';
 import 'package:io/io.dart';
 
 ///
@@ -25,9 +24,11 @@ Future<void> main(List<String> arguments) async {
 
   await runZonedGuarded<Future<void>>(
     () async {
-      final Directory previousPwd = Directory.current;
-
       final Configuration configuration = argResults.toConfiguration();
+
+      // save previous pwd so we can get back to location where the script
+      // was executed.
+      final Directory previousPwd = Directory.current;
 
       Directory.current = configuration.projectDirPath;
 
@@ -36,7 +37,7 @@ Future<void> main(List<String> arguments) async {
       if (configuration.projectType == ProjectType.flutter) {
         final String patchFilePath = await patcher.generatePatchFile();
 
-        stdout.writeln('Patch file generated at: $patchFilePath');
+        stdout.writeln('Patch file generated at: $patchFilePath\n');
       }
 
       final TestRunner testRunner = FlutterTestRunner(configuration);
@@ -45,19 +46,28 @@ Future<void> main(List<String> arguments) async {
 
       stdout.writeln(
         '$coverageFileName file generated '
-        'at: ${configuration.coverageOutputDirPath}',
+        'at: ${configuration.coverageOutputDirPath}\n',
       );
 
       await patcher.cleanupPatchFile();
 
-      stdout.writeln('Patch file cleaned up after code coverage generation');
+      stdout.writeln('Patch file cleaned up after code coverage generation\n');
 
       final LcovScriptCoverageReporter reporter =
           LcovScriptCoverageReporter(configuration: configuration);
 
-      final String reportFilePath = await reporter.generateReport();
+      if (configuration.enableHtmlReport) {
+        final String reportFilePath = await reporter.generateReport();
 
-      stdout.writeln('Detailed code coverage report: $reportFilePath');
+        stdout.writeln('Detailed code coverage report: $reportFilePath');
+      }
+
+      if (configuration.excludes.isNotEmpty) {
+        stdout.writeln(
+          'Excluded from the report, files matching : '
+          '${configuration.excludes.join(', ')}\n',
+        );
+      }
 
       final double overallTestCoverage = await reporter.overallTestCoverage();
 
