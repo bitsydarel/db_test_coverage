@@ -40,10 +40,10 @@ class ShellOutput {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is ShellOutput &&
-              runtimeType == other.runtimeType &&
-              stdout == other.stdout &&
-              stderr == other.stderr;
+      other is ShellOutput &&
+          runtimeType == other.runtimeType &&
+          stdout == other.stdout &&
+          stderr == other.stderr;
 
   @override
   int get hashCode => stdout.hashCode ^ stderr.hashCode;
