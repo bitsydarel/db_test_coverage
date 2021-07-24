@@ -1,6 +1,6 @@
 name: db_test_coverage
 description: A command-line tool that run tests with coverage on a project.
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/bitsydarel/db_test_coverage
 
 environment:

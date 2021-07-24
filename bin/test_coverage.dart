@@ -76,7 +76,7 @@ Future<void> main(List<String> arguments) async {
           '${(overallTestCoverage * 100).toStringAsFixed(1)}% code coverage '
           'is lower than the minimum allowed of '
           '${(configuration.minCodeCoverageAllowed * 100).toStringAsFixed(1)}%',
-          exitCode,
+          ExitCode.software.code,
         );
       }
 
@@ -86,12 +86,12 @@ Future<void> main(List<String> arguments) async {
       if (error is UnrecoverableException) {
         stderr.writeln(error.reason);
         exitCode = error.exitCode;
-        exit(exitCode);
       } else {
         printHelpMessage(error.toString());
         exitCode = ExitCode.software.code;
-        exit(exitCode);
       }
+
+      exit(exitCode);
     },
   );
 }
