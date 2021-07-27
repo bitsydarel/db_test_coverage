@@ -20,8 +20,8 @@ jobs:
         run: dart --version
 
       - uses: dart-lang/setup-dart@v1.0
-          with:
-            sdk: 2.13.4
+         with:
+          sdk: 2.13.4
 
       - name: Install dependencies
         run: dart pub get
