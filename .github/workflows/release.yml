@@ -16,12 +16,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Print Dart SDK version
-        run: dart --version
-
       - uses: dart-lang/setup-dart@v1.0
         with:
           sdk: 2.13.4
+
+      - name: Print Dart SDK version
+        run: dart --version
 
       - name: Install dependencies
         run: dart pub get
